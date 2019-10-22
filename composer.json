@@ -1,0 +1,29 @@
+{
+    "name": "wpextend/basic-wordpress-boilerplate-plugin",
+    "description": "Basic Wordpress boilerplate theme",
+    "version": "1.0.0",
+    "type": "wordpress-plugin",
+    "keywords": ["wordpress", "plugin", "boilerplate-plugin"],
+    "homepage": "https://github.com/PaulBalanche/basic-wordpress-boilerplate-plugin",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Paul Balanche",
+            "email": "paul.balanche@gmail.com",
+            "homepage": "https://github.com/PaulBalanche/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "paul.balanche@gmail.com"
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "google/apiclient": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WpeGoogleOauth\\": "inc/classes/"
+        }
+    }
+}
