@@ -1,7 +1,7 @@
 {
     "name": "wpextend/google-sign-in",
-    "description": "Allow signin dashboard thanks to Google Sing-In OAuth",
-    "version": "1.0.0",
+    "description": "Connect to the dashboard easily with Google Sign-In",
+    "version": "1.0.1",
     "type": "wordpress-plugin",
     "keywords": ["wordpress", "plugin", "boilerplate-plugin"],
     "homepage": "https://github.com/PaulBalanche/WPE-Google-OAuth",
@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "WpeGoogleOauth\\": "inc/classes/"
+            "WpeGoogleSignIn\\": "inc/classes/"
         }
     }
 }

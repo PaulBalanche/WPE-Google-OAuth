@@ -1,13 +1,13 @@
 <?php
 /**
 * Plugin Name: WPE Google Sign-In
-* Description: Allow signin dashboard thanks to Google Sing-In OAuth
-* Text Domain: WpeGoogleOauth
-* Version: 1.0.0
+* Description: Connect to the dashboard easily with Google Sign-In
+* Text Domain: WpeGoogleSignIn
+* Version: 1.0.1
 * Author: Paul Balanche
 **/
 
-namespace WpeGoogleOauth;
+namespace WpeGoogleSignIn;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

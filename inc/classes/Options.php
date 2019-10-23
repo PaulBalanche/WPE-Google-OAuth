@@ -1,6 +1,6 @@
 <?php
 
-namespace WpeGoogleOauth;
+namespace WpeGoogleSignIn;
 
 /**
 *
@@ -66,7 +66,7 @@ class Options {
 
         // Base 64 encoded SVG image.
         $icon_svg = 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( PLUGIN_DIR_PATH . 'assets/img/icon.svg' ) );
-        add_menu_page(PLUGIN_NAME, PLUGIN_NAME, 'manage_options', 'WpeGoogleOauth_options', array( $this, 'render_admin_page' ), $icon_svg );
+        add_menu_page(PLUGIN_NAME, PLUGIN_NAME, 'manage_options', 'wpe_google_signin_options', array( $this, 'render_admin_page' ), $icon_svg );
     }
 
 
@@ -114,7 +114,7 @@ class Options {
             else
                 update_option( self::$prefix_name_database . 'allow_new_users', false);
 
-            \Wpextend\AdminNotice::add_notice( 'WpeGoogleOauth-0', 'Options saved.', 'success', true, true, PLUGIN_NAME );
+            \Wpextend\AdminNotice::add_notice( 'WpeGoogleSignin-0', 'Options saved.', 'success', true, true, PLUGIN_NAME );
         }
 
         // JSON credentials file
@@ -126,10 +126,10 @@ class Options {
                 json_decode( $json_client_secret, false, 512, JSON_THROW_ON_ERROR );
 
                 if( file_put_contents( PLUGIN_DIR_PATH . 'config/' . self::$json_file_name, $json_client_secret ) )
-                    \Wpextend\AdminNotice::add_notice( 'WpeGoogleOauth-1', 'JSON credentials file successfully added.', 'success', true, true, PLUGIN_NAME );
+                    \Wpextend\AdminNotice::add_notice( 'WpeGoogleSignin-1', 'JSON credentials file successfully added.', 'success', true, true, PLUGIN_NAME );
 
             } catch (\Exception $e) {
-                \Wpextend\AdminNotice::add_notice( 'WpeGoogleOauth-2', 'Invalid JSON...', 'error', true, true, PLUGIN_NAME );
+                \Wpextend\AdminNotice::add_notice( 'WpeGoogleSignin-2', 'Invalid JSON...', 'error', true, true, PLUGIN_NAME );
             }
         }
 
