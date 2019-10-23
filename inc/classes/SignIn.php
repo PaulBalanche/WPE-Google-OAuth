@@ -7,7 +7,8 @@ namespace WpeGoogleOauth;
  */
 class SignIn {
 
-    private static $_instance;
+    private static $_instance,
+        $name_admin_post_action_signin = 'google_oauth_signin';
 
     private $client;
 
@@ -48,7 +49,7 @@ class SignIn {
         add_action('login_enqueue_scripts', array( __CLASS__, 'login_enqueue_scripts' ) );
 
         // Hook google_oauth action in order to create or logged user
-        add_action( 'admin_post_nopriv_google_oauth', array($this, 'sign_client') );
+        add_action( 'admin_post_nopriv_' . self::$name_admin_post_action_signin, array($this, 'sign_client') );
 
         // Add Google Signin button on login admin page
         add_action( 'login_message', array($this, 'display_link_signin') );
@@ -84,11 +85,10 @@ class SignIn {
         $this->client->addScope( 'profile' );
 
         // Add JSON auth config file
-        $this->client->setAuthConfig( PLUGIN_DIR_PATH . 'config/client_secret_34262581282-d6l8d4fefiopks0dvj8vocl7mfn99blq.apps.googleusercontent.com.json' );
+        $this->client->setAuthConfig( Options::getInstance()->get_json_client_secret() );
 
         // Set redirect URL
-        $redirecturi = add_query_arg( [ 'action' => 'google_oauth' ], admin_url( 'admin-post.php' ) );
-        $this->client->setRedirectUri($redirecturi);
+        $this->client->setRedirectUri( self::get_redirect_uri() );
     }
     
 
@@ -120,14 +120,19 @@ class SignIn {
                 // // Check if user_name and email already exists or not
                 if( ! $user_id_from_username && ! $user_id_from_email ) {
 
-                    $user_id = wp_insert_user( [
-                        'user_email'    => $google_account_info->email,
-                        'user_login'    => $user_name,
-                        'user_pass'     => wp_generate_password(),
-                        'first_name'    => $google_account_info->givenName,
-                        'last_name'     => $google_account_info->familyName,
-                        'display_name'  => $google_account_info->name
-                    ] );
+                    if( Options::getInstance()->allow_new_users() ) {
+
+                        $user_id = wp_insert_user( [
+                            'user_email'    => $google_account_info->email,
+                            'user_login'    => $user_name,
+                            'user_pass'     => wp_generate_password(),
+                            'first_name'    => $google_account_info->givenName,
+                            'last_name'     => $google_account_info->familyName,
+                            'display_name'  => $google_account_info->name
+                        ] );
+                    }
+                    else
+                        $error_signin = 'New users doesn\'t allowed...';
                 }
                 else if( $user_id_from_username == $user_id_from_email ) {
 
@@ -141,7 +146,7 @@ class SignIn {
                     ] );
                 }
                 else {
-                    $error_signin = "Username and email already exist and doesn't match...";
+                    $error_signin = 'Username and email already exist and doesn\'t match...';
                 }
                 
                 // Log in user by setting authentication cookies.
@@ -151,8 +156,8 @@ class SignIn {
                         $error_signin = $user_id->get_error_message();
                     else {
 
-                        update_user_meta( $user_id, '_wpegoogleoauth_signin', true );
-                        update_user_meta( $user_id, '_wpegoogleoauth_picture', $google_account_info->picture );
+                        update_user_meta( $user_id, '_' . Options::$prefix_name_database . 'signin', true );
+                        update_user_meta( $user_id, '_' . Options::$prefix_name_database . 'picture', $google_account_info->picture );
 
                         wp_set_auth_cookie( $user_id );
                     }
@@ -208,7 +213,7 @@ class SignIn {
      */
     static public function get_avatar_data( $args, $id_or_email ) {
 
-        $picture = get_user_meta( $id_or_email, '_wpegoogleoauth_picture', true );        
+        $picture = get_user_meta( $id_or_email, '_' . Options::$prefix_name_database . 'picture', true );        
         if( $picture && ! empty($picture) && ! is_null($picture) )
             $args['url'] = $picture;
 
@@ -223,11 +228,22 @@ class SignIn {
      */
     static public function user_profile_picture_description( $description, $profileuser ) {
 
-        $picture = get_user_meta( $profileuser->ID, '_wpegoogleoauth_picture', true );        
+        $picture = get_user_meta( $profileuser->ID, '_' . Options::$prefix_name_database . 'picture', true );        
         if( $picture && ! empty($picture) && ! is_null($picture) )
             $description = 'This is your Google account photo.';
 
         return $description;
+    }
+
+
+
+    /**
+     * Return Google sign-in redirect URI
+     * 
+     */
+    static public function get_redirect_uri() {
+        
+        return add_query_arg( [ 'action' => self::$name_admin_post_action_signin ], admin_url( 'admin-post.php' ) );
     }
 
 

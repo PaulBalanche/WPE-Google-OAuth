@@ -1,7 +1,7 @@
 <?php
 /**
-* Plugin Name: WPE Google OAuth
-* Description:
+* Plugin Name: WPE Google Sign-In
+* Description: Allow signin dashboard thanks to Google Sing-In OAuth
 * Text Domain: WpeGoogleOauth
 * Version: 1.0.0
 * Author: Paul Balanche
@@ -19,6 +19,7 @@ error_reporting(E_ALL | E_STRICT);
  * Define constants
  *
  */
+define( __NAMESPACE__ . '\PLUGIN_NAME', 		'Google Sign-In' );
 define( __NAMESPACE__ . '\PLUGIN_DIR_PATH',     plugin_dir_path( __FILE__ ) );
 define( __NAMESPACE__ . '\PLUGIN_URL',          plugins_url('', __FILE__) . '/' );
 define( __NAMESPACE__ . '\PLUGIN_ASSETS_URL' ,  PLUGIN_URL . 'assets' . '/' );
@@ -40,6 +41,8 @@ function _plugin_init() {
 	// Plugin vendor autoloader
 	require( PLUGIN_DIR_PATH . 'vendor/autoload.php' );
 
-	// Load SignIn instance
-	SignIn::getInstance();
+	// Load instances
+	Options::getInstance();
+	if( Options::getInstance()->get_json_client_secret() )
+		SignIn::getInstance();
 }

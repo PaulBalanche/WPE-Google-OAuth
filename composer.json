@@ -1,10 +1,10 @@
 {
-    "name": "wpextend/basic-wordpress-boilerplate-plugin",
-    "description": "Basic Wordpress boilerplate theme",
+    "name": "wpextend/google-sign-in",
+    "description": "Allow signin dashboard thanks to Google Sing-In OAuth",
     "version": "1.0.0",
     "type": "wordpress-plugin",
     "keywords": ["wordpress", "plugin", "boilerplate-plugin"],
-    "homepage": "https://github.com/PaulBalanche/basic-wordpress-boilerplate-plugin",
+    "homepage": "https://github.com/PaulBalanche/WPE-Google-OAuth",
     "license": "proprietary",
     "authors": [
         {
