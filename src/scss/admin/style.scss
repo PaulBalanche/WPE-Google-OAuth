@@ -1,0 +1,32 @@
+#wpe_google_oauth_signin_container {
+
+    width: 240px;
+    margin: auto;
+    margin-top: 3rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+
+    &:after {
+
+        display: block;
+        content: "";
+        width: 20px;
+        height: 2px;
+        margin: auto;
+        margin-top: 2rem;
+        background: rgb(120,120,120);
+    }
+
+    a {
+
+        display: inline-block;
+        background: url('../../img/btn_google_signin_light_normal_web@2x.png');
+        background-size: 100%;
+        width: 191px;
+        height: 46px;
+
+        &:hover{
+            background-image: url('../../img/btn_google_signin_light_pressed_web@2x.png');
+        }
+    }
+}
