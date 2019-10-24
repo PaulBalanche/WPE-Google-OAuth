@@ -213,9 +213,17 @@ class SignIn {
      */
     static public function get_avatar_data( $args, $id_or_email ) {
 
-        $picture = get_user_meta( $id_or_email, '_' . Options::$prefix_name_database . 'picture', true );        
-        if( $picture && ! empty($picture) && ! is_null($picture) )
-            $args['url'] = $picture;
+        if( is_object($id_or_email) ) {
+
+            if( isset($id_or_email->user_id) )
+                $id_or_email = $id_or_email->user_id;
+        }
+
+        if( is_numeric($id_or_email) ) {
+            $picture = get_user_meta( $id_or_email, '_' . Options::$prefix_name_database . 'picture', true );        
+            if( $picture && ! empty($picture) && ! is_null($picture) )
+                $args['url'] = $picture;
+        }
 
         return $args;
     }

@@ -2,6 +2,10 @@
 
 namespace WpeGoogleSignIn;
 
+use \Wpextend\Package\AdminNotice;
+use \Wpextend\Package\RenderAdminHtml;
+use \Wpextend\Package\TypeField;
+
 /**
 *
 */
@@ -79,18 +83,18 @@ class Options {
 	public function render_admin_page() {
 
         // Header page & open form
-		$retour_html = \Wpextend\RenderAdminHtml::header(PLUGIN_NAME . ' options');
+		$retour_html = RenderAdminHtml::header(PLUGIN_NAME . ' options');
 
         $retour_html .= '<div class="mt-1 white">';
-        $retour_html .= \Wpextend\RenderAdminHtml::form_open( admin_url( 'admin-post.php' ), self::$name_admin_post_options_update );
+        $retour_html .= RenderAdminHtml::form_open( admin_url( 'admin-post.php' ), self::$name_admin_post_options_update );
         
-        $retour_html .= \Wpextend\RenderAdminHtml::table_edit_open();
-        $retour_html .= \Wpextend\TypeField::render_input_radio( 'Allow new users' , 'allow_new_users', [ 'false' => 'No, accept only users already registred.', 'true' => 'Yes' ], $this->allow_new_users() );
-        $retour_html .= \Wpextend\TypeField::render_input_textarea( 'JSON credentials file', 'json_client_secret', '', false, 'Leave empty to not update.<br /><br />Paste your file content here.<br />For more information, see the <a href="https://console.developers.google.com/apis/" target="_blank">authentication documentation</a>', false );
-        $retour_html .= \Wpextend\TypeField::render_disable_input_text( 'Authorized redirect URIs', '', add_query_arg( [ 'action' => SignIn::get_redirect_uri() ], admin_url( 'admin-post.php' ) ),  'Add this path in your OAuth 2.0 client ID <a href="https://console.developers.google.com/apis/dashboard" target="_blank">configuration</a>' );
-        $retour_html .= \Wpextend\RenderAdminHtml::table_edit_close();
+        $retour_html .= RenderAdminHtml::table_edit_open();
+        $retour_html .= TypeField::render_input_radio( 'Allow new users' , 'allow_new_users', [ 'false' => 'No, accept only users already registred.', 'true' => 'Yes' ], $this->allow_new_users() );
+        $retour_html .= TypeField::render_input_textarea( 'JSON credentials file', 'json_client_secret', '', false, 'Leave empty to not update.<br /><br />Paste your file content here.<br />For more information, see the <a href="https://console.developers.google.com/apis/" target="_blank">authentication documentation</a>', false );
+        $retour_html .= TypeField::render_disable_input_text( 'Authorized redirect URIs', '', add_query_arg( [ 'action' => SignIn::get_redirect_uri() ], admin_url( 'admin-post.php' ) ),  'Add this path in your OAuth 2.0 client ID <a href="https://console.developers.google.com/apis/dashboard" target="_blank">configuration</a>' );
+        $retour_html .= RenderAdminHtml::table_edit_close();
 
-        $retour_html .= \Wpextend\RenderAdminHtml::form_close( 'Save', true );
+        $retour_html .= RenderAdminHtml::form_close( 'Save', true );
         $retour_html .= '</div>';
 
 		// return
@@ -114,7 +118,7 @@ class Options {
             else
                 update_option( self::$prefix_name_database . 'allow_new_users', false);
 
-            \Wpextend\AdminNotice::add_notice( 'WpeGoogleSignin-0', 'Options saved.', 'success', true, true, PLUGIN_NAME );
+            AdminNotice::add_notice( 'WpeGoogleSignin-0', 'Options saved.', 'success', true, true, PLUGIN_NAME );
         }
 
         // JSON credentials file
@@ -126,10 +130,10 @@ class Options {
                 json_decode( $json_client_secret, false, 512, JSON_THROW_ON_ERROR );
 
                 if( file_put_contents( PLUGIN_DIR_PATH . 'config/' . self::$json_file_name, $json_client_secret ) )
-                    \Wpextend\AdminNotice::add_notice( 'WpeGoogleSignin-1', 'JSON credentials file successfully added.', 'success', true, true, PLUGIN_NAME );
+                    AdminNotice::add_notice( 'WpeGoogleSignin-1', 'JSON credentials file successfully added.', 'success', true, true, PLUGIN_NAME );
 
             } catch (\Exception $e) {
-                \Wpextend\AdminNotice::add_notice( 'WpeGoogleSignin-2', 'Invalid JSON...', 'error', true, true, PLUGIN_NAME );
+                AdminNotice::add_notice( 'WpeGoogleSignin-2', 'Invalid JSON...', 'error', true, true, PLUGIN_NAME );
             }
         }
 
