@@ -1,0 +1,1 @@
+sass --style=compressed --no-source-map src/scss/admin/style.scss assets/style/admin/style.min.css
