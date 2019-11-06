@@ -91,7 +91,7 @@ class Options {
         $retour_html .= RenderAdminHtml::table_edit_open();
         $retour_html .= TypeField::render_input_radio( 'Allow new users' , 'allow_new_users', [ 'false' => 'No, accept only users already registred.', 'true' => 'Yes' ], $this->allow_new_users() );
         $retour_html .= TypeField::render_input_textarea( 'JSON credentials file', 'json_client_secret', '', false, 'Leave empty to not update.<br /><br />Paste your file content here.<br />For more information, see the <a href="https://console.developers.google.com/apis/" target="_blank">authentication documentation</a>', false );
-        $retour_html .= TypeField::render_disable_input_text( 'Authorized redirect URIs', '', add_query_arg( [ 'action' => SignIn::get_redirect_uri() ], admin_url( 'admin-post.php' ) ),  'Add this path in your OAuth 2.0 client ID <a href="https://console.developers.google.com/apis/dashboard" target="_blank">configuration</a>' );
+        $retour_html .= TypeField::render_disable_input_text( 'Authorized redirect URIs', '', SignIn::get_redirect_uri(),  'Add this path in your OAuth 2.0 client ID <a href="https://console.developers.google.com/apis/dashboard" target="_blank">configuration</a>' );
         $retour_html .= RenderAdminHtml::table_edit_close();
 
         $retour_html .= RenderAdminHtml::form_close( 'Save', true );
