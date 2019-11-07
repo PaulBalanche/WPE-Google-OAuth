@@ -3,7 +3,7 @@
 * Plugin Name: WPE Google Sign-In
 * Description: Connect to the dashboard easily with Google Sign-In
 * Text Domain: WpeGoogleSignIn
-* Version: 1.0.4
+* Version: 1.0.5
 * Author: Paul Balanche
 **/
 
