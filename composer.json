@@ -1,7 +1,7 @@
 {
     "name": "wpextend/google-sign-in",
     "description": "Connect to the dashboard easily with Google Sign-In",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "type": "wordpress-plugin",
     "keywords": ["wordpress", "plugin", "boilerplate-plugin"],
     "homepage": "https://github.com/PaulBalanche/WPE-Google-OAuth",
