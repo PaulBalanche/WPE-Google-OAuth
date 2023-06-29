@@ -249,7 +249,7 @@ class SignIn {
      * Return Google sign-in redirect URI
      * 
      */
-    public function get_redirect_uri() {
+    public static function get_redirect_uri() {
         
         return add_query_arg( [ 'action' => self::$name_admin_post_action_signin ], admin_url( 'admin-post.php' ) );
     }
