@@ -46,7 +46,7 @@ class SignIn {
 	public function create_hooks() {
 
         // Enqueue styles & scripts
-        add_action('login_enqueue_scripts', array( __CLASS__, 'login_enqueue_scripts' ) );
+        add_action('login_enqueue_scripts', array( $this, 'login_enqueue_scripts' ) );
 
         // Hook google_oauth action in order to create or logged user
         add_action( 'admin_post_nopriv_' . self::$name_admin_post_action_signin, array($this, 'sign_client') );
@@ -65,7 +65,7 @@ class SignIn {
 	 * Wordpress Enqueues functions
 	 *
 	 */
-	public static function login_enqueue_scripts() {
+	public function login_enqueue_scripts() {
 
 		wp_enqueue_style( 'wpegoogleoauth_admin_style', PLUGIN_ASSETS_URL . 'style/admin/style.min.css', false, true );
 	}
@@ -97,7 +97,7 @@ class SignIn {
      * Hook google_oauth action in order to create or logged user
      * 
      */
-    static public function sign_client() {
+    public function sign_client() {
 
         if( isset($_GET['code']) ) {
 
@@ -178,7 +178,7 @@ class SignIn {
      * Add Google Signin button on login admin page
      * 
      */
-    static public function display_link_signin( $message ) {
+    public function display_link_signin( $message ) {
 
         // Init Google client
         $this->init_google_client();
@@ -197,7 +197,7 @@ class SignIn {
      * Hook wp_login_errors in order to display error during Google Signin
      * 
      */
-    static public function wp_login_errors( $errors ) {
+    public function wp_login_errors( $errors ) {
 
         if( isset($_GET['error']) && ! empty($_GET['error']) )
             $errors->add( '', stripslashes(urldecode($_GET['error'])), 'message' );
@@ -211,7 +211,7 @@ class SignIn {
      * Hook get_avatar_data in order to return Google account photo
      * 
      */
-    static public function get_avatar_data( $args, $id_or_email ) {
+    public function get_avatar_data( $args, $id_or_email ) {
 
         if( is_object($id_or_email) ) {
 
@@ -234,7 +234,7 @@ class SignIn {
      * Hook user_profile_picture_description in order to return specific description
      * 
      */
-    static public function user_profile_picture_description( $description, $profileuser ) {
+    public function user_profile_picture_description( $description, $profileuser ) {
 
         $picture = get_user_meta( $profileuser->ID, '_' . Options::$prefix_name_database . 'picture', true );        
         if( $picture && ! empty($picture) && ! is_null($picture) )
@@ -249,7 +249,7 @@ class SignIn {
      * Return Google sign-in redirect URI
      * 
      */
-    static public function get_redirect_uri() {
+    public function get_redirect_uri() {
         
         return add_query_arg( [ 'action' => self::$name_admin_post_action_signin ], admin_url( 'admin-post.php' ) );
     }
