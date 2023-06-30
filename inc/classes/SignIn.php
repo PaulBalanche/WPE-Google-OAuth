@@ -113,31 +113,12 @@ class SignIn {
 
                 // Create username
                 $user_name = strtolower($google_account_info->givenName) . '.' . strtolower($google_account_info->familyName);
-
-                $user_id_from_username = username_exists($user_name);
                 $user_id_from_email = email_exists($google_account_info->email);
 
-                // // Check if user_name and email already exists or not
-                if( ! $user_id_from_username && ! $user_id_from_email ) {
-
-                    if( Options::getInstance()->allow_new_users() ) {
-
-                        $user_id = wp_insert_user( [
-                            'user_email'    => $google_account_info->email,
-                            'user_login'    => $user_name,
-                            'user_pass'     => wp_generate_password(),
-                            'first_name'    => $google_account_info->givenName,
-                            'last_name'     => $google_account_info->familyName,
-                            'display_name'  => $google_account_info->name
-                        ] );
-                    }
-                    else
-                        $error_signin = 'New users doesn\'t allowed...';
-                }
-                else if( $user_id_from_username == $user_id_from_email ) {
-
+                // Check if email already exists or not
+                if( $user_id_from_email ) {
                     $user_id = wp_insert_user( [
-                        'ID'            => $user_id_from_username,
+                        'ID'            => $user_id_from_email,
                         'user_email'    => $google_account_info->email,
                         'user_login'    => $user_name,
                         'first_name'    => $google_account_info->givenName,
@@ -145,8 +126,19 @@ class SignIn {
                         'display_name'  => $google_account_info->name
                     ] );
                 }
+                elseif ( Options::getInstance()->allow_new_users() )
+
+                    $user_id = wp_insert_user( [
+                        'user_email'    => $google_account_info->email,
+                        'user_login'    => $user_name,
+                        'user_pass'     => wp_generate_password(),
+                        'first_name'    => $google_account_info->givenName,
+                        'last_name'     => $google_account_info->familyName,
+                        'display_name'  => $google_account_info->name
+                    ] );
+                }
                 else {
-                    $error_signin = 'Username and email already exist and doesn\'t match...';
+                    $error_signin = 'Please contact us to create an access.';
                 }
                 
                 // Log in user by setting authentication cookies.

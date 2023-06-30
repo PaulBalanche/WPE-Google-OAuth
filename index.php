@@ -3,7 +3,7 @@
 * Plugin Name: WPE Google Sign-In
 * Description: Connect to the dashboard easily with Google Sign-In
 * Text Domain: WpeGoogleSignIn
-* Version: 1.1.2
+* Version: 1.1.3
 * Author: Paul Balanche
 **/
 
@@ -34,9 +34,6 @@ function _plugin_init() {
 
 	// Load text domain
 	load_plugin_textdomain( PLUGIN_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages' );
-	
-	// Functions
-	// require( PLUGIN_DIR_PATH . '/inc/functions/basic-functions.php' );
 
 	// Plugin vendor autoloader
 	require( PLUGIN_DIR_PATH . 'vendor/autoload.php' );

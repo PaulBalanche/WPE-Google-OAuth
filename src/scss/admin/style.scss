@@ -1,33 +1,45 @@
 #wpe_google_oauth_signin_container {
 
-    width: 240px;
-    margin: auto;
-    margin-top: 3rem;
-    margin-bottom: 2.5rem;
+    margin-top: 60px;
+    margin-bottom: 60px;
     text-align: center;
 
-    &:after {
-
-        display: block;
-        content: "";
-        width: 20px;
-        height: 2px;
-        margin: auto;
-        margin-top: 2rem;
-        background: rgb(120,120,120);
-    }
-
     a {
-
-        display: inline-block;
-        background: url('../../img/btn_google_signin_light_normal_web@2x.png');
-        background-size: 100%;
-        width: 191px;
+        display: inline-flex;
+        align-items: center;
         height: 46px;
-        box-shadow: none;
+        padding: 0 20px;
+        background: #fff;
+        border: 1px solid #c3c4c7;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        color: #3c434a;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease-in-out;
 
         &:hover{
-            background-image: url('../../img/btn_google_signin_dark_normal_web@2x.png');
+            // border-color: #2271b1;
+            color: #2271b1;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        svg {
+            height: 60%;
+            margin-right: 10px;
         }
     }
+}
+
+#loginform, #nav, #backtoblog {
+    opacity: 0.3;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+#login-message {
+    margin-top: -20px;
+    margin-bottom: 40px;
 }
