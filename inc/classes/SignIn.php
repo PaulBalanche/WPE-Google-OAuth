@@ -126,7 +126,7 @@ class SignIn {
                         'display_name'  => $google_account_info->name
                     ] );
                 }
-                elseif ( Options::getInstance()->allow_new_users() )
+                elseif ( Options::getInstance()->allow_new_users() ) {
 
                     $user_id = wp_insert_user( [
                         'user_email'    => $google_account_info->email,
